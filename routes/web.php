@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProductController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('articles', [ArticleController::class, 'index'])->Middleware('subscription')->name('articles.index');
 
-Route::get('articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('articles/{article}', [ArticleController::class, 'show'])->Middleware('subscription')->name('articles.show');
 
 Route::get('billing', [BillingController::class, 'index'])->middleware('auth')->name('billing.index');
 
