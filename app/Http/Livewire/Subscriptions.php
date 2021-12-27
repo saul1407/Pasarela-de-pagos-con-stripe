@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class Subscriptions extends Component
 {
+    protected $listeners = ['render'];
+
     public function render()
     {
         return view('livewire.subscriptions');
@@ -25,5 +27,10 @@ class Subscriptions extends Component
 
         auth()->user()->subscription($name)->cancel();
 
+    }
+
+    public function resumeToPlan($name){
+
+        auth()->user()->subscription($name)->resume();
     }
 }
