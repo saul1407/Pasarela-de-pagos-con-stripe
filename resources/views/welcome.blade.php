@@ -7,7 +7,7 @@
               <div class="card">
                   <div class="flex px-4 py-2 bg-gray-800 justify-between items-center">
                       <span class="text-white text-xl font-bold">{{$product->price}} USD</span>
-                      <a href="#" class="btn btn-secondary">Comprar</a>
+                      <a href="{{ route('product.pay', $product) }}" class="btn btn-secondary">Comprar</a>
                   </div>
                   <img class="h-56 w-full object-cover" src="{{Storage::url($product->image)}}" alt="">
                   <div class="card-body">

@@ -5,7 +5,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProductController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,12 +19,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-Route::get('articles', [ArticleController::class, 'index'])->Middleware('subscription')->name('articles.index');
+Route::get('product/{product}/pay',[ProductController::class, 'pay'])->middleware('auth')->name('product.pay');
+
+
+Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
 
 Route::get('articles/{article}', [ArticleController::class, 'show'])->Middleware('subscription')->name('articles.show');
 
 Route::get('billing', [BillingController::class, 'index'])->middleware('auth')->name('billing.index');
 
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
+    return $request->user()->downloadInvoice($invoiceId, [
+        'vendor' => 'Your Company',
+        'product' => 'Your Product',
+    ]);
+});
